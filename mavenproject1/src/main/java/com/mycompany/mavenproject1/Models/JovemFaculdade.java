@@ -1,31 +1,30 @@
 package com.mycompany.mavenproject1.Models;
 
 public class JovemFaculdade extends Jovem {
-    
-    protected String universidade;
-    protected String curso;
 
-    
-    public JovemFaculdade(Integer idade, String hobbie, String nome, Boolean trabalha, String escolaridade, Double diversao, Double nota1, Double nota2) {
-        super(idade, hobbie, nome, trabalha, escolaridade, diversao, nota1, nota2);
+    public JovemFaculdade(Integer idade, String nome, Boolean trabalha, Integer escolaridade) {
+        super(idade, nome, trabalha, escolaridade);
     }
 
-    public String getUniversidade() {
-        return universidade;
+    @Override
+    String trabalhar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setUniversidade(String universidade) {
-        this.universidade = universidade;
+    @Override
+    String estudar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String getCurso() {
-        return curso;
+    @Override
+    void envelhecer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setCurso(String curso) {
-        this.curso = curso;
+    @Override
+    void divertir() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
 }
 

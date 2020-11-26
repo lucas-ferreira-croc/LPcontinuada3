@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class TesteSelect {
     
 
-    public static void Select(String nick, String senha) {
+    public static void SelectUsuario(String nick, String senha) {
         try{
             Connection con = Conexao.conectarBanco();
         
@@ -28,7 +28,7 @@ public class TesteSelect {
         catch(SQLException e){
             e.printStackTrace();
         }
+        
     }
 
-  
 }

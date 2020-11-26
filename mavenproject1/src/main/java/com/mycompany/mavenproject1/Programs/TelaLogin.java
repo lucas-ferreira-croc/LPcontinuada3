@@ -9,6 +9,7 @@ import com.mycompany.mavenproject1.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JLabel;
 
 /**
@@ -26,7 +27,7 @@ public class TelaLogin extends javax.swing.JFrame {
     
     
     
-    public static void SelectUsuario(String nick, String senha, JLabel labelResultado, TelaEM telaEnsinoMedio){
+    public static void SelectUsuario(String nick, String senha, JLabel labelResultado, TelaEscolha telaJovem){
         try {
             Connection con = Conexao.conectarBanco();
             
@@ -41,15 +42,16 @@ public class TelaLogin extends javax.swing.JFrame {
             
             if(rs.next()){
                 labelResultado.setText("Bem vindo! " + nick + ". Login realizado com sucesso.");
-                telaEnsinoMedio.setVisible(true);
+                telaJovem.setVisible(true);
             }
             else{
                 labelResultado.setText("Você não está cadastrado ou errou algum campo");
-                telaEnsinoMedio = null;
-                telaEnsinoMedio.setVisible(true);
+                telaJovem = null;
+                telaJovem.setVisible(true);
             }
         } 
-        catch (Exception e) {
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -68,9 +70,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tfNick = new javax.swing.JTextField();
-        btLogar = new javax.swing.JToggleButton();
         lbResultado = new javax.swing.JLabel();
         tfSenha = new javax.swing.JPasswordField();
+        btLogar = new javax.swing.JButton();
 
         jLabel4.setText("jLabel4");
 
@@ -84,18 +86,13 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel3.setText("senha:");
 
-        btLogar.setText("Logar");
-        btLogar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btLogarActionPerformed(evt);
-            }
-        });
-
         tfSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfSenhaActionPerformed(evt);
             }
         });
+
+        btLogar.setText("Logar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,13 +112,13 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addGap(18, 18, 18)
-                                    .addComponent(tfSenha)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(btLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfSenha)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(lbResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(btLogar)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -137,24 +134,15 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(41, 41, 41)
                 .addComponent(btLogar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(lbResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
-        String nickLogin = tfNick.getText();
-        String senhaLogin = tfSenha.getText();
-                
-        TelaEM telaEnsinoMedio = new TelaEM(); 
-        SelectUsuario(nickLogin,senhaLogin,lbResultado,telaEnsinoMedio);
-
-    }//GEN-LAST:event_btLogarActionPerformed
 
     private void tfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSenhaActionPerformed
         // TODO add your handling code here:
@@ -196,7 +184,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btLogar;
+    private javax.swing.JButton btLogar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

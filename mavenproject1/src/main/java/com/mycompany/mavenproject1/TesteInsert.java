@@ -31,7 +31,7 @@ public class TesteInsert {
         }
     }
 
-    public static void InsertCadastro(String nick, String senha){
+    public static void InsertUsuario(String nick, String senha){
         try {
             Connection conexaoBanco = Conexao.conectarBanco();
                   
@@ -44,12 +44,9 @@ public class TesteInsert {
             
             System.out.println("Cadastro realizado e conexão com banco finalizada");           
         }
-        catch (Exception e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
    
-    public static void main(String[] args) {
-        TesteInsert.InsertCadastro("luvas", "luvas");
-    }
 }

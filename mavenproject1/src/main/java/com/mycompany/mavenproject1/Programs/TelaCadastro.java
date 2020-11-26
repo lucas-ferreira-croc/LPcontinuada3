@@ -135,7 +135,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         } else if (nickCadastrar.length() < 5 || senhaCadastrar.length() < 5) {
             lbResultado.setText("Seu nickname e sua senha precisam ter no mínimo 5 caracteres");
         } else {
-            TesteInsert.InsertCadastro(nickCadastrar, senhaCadastrar);
+            TesteInsert.InsertUsuario(nickCadastrar, senhaCadastrar);
             lbResultado.setText("Parabéns! você foi cadastrado com sucesso!");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
