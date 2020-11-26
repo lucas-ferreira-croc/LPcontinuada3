@@ -12,7 +12,7 @@ public class Conexao {
      private static String usuario = "root";
      private static String senha = "53677821";
      
-     public static Connection faz_conexao() throws SQLException{
+     public static Connection conectarBanco() throws SQLException{
         try{
             Class.forName(driver);
         
@@ -22,9 +22,5 @@ public class Conexao {
             throw new SQLException(e.getException());
         }
     }
-     
-     public static void main(String[] args) {
-        TesteInsert.Insert();
-        TesteSelect.Select();
-    }
+  
 }

@@ -8,11 +8,11 @@ import java.sql.SQLException;
 public class TesteSelect {
     
 
-    public static void Select() {
+    public static void Select(String nick, String senha) {
         try{
-            Connection con = Conexao.faz_conexao();
+            Connection con = Conexao.conectarBanco();
         
-            String query = "select * from teste where nome =?";
+            String query = "select * from usuario where nome =? and senha=?";
         
             PreparedStatement stmt = con.prepareStatement(query);
             
@@ -20,22 +20,15 @@ public class TesteSelect {
          
             ResultSet rs = stmt.executeQuery();
             
-            System.out.println(stmt.toString());
-            
-            if(rs.next()){
-                System.out.println("uiui");
-            }
-            else{
-                System.out.println("garfo");
-            }
-            
             stmt.close();
             con.close();
+            
+            System.out.println("Select realizado e conexão com o banco fechada com sucesso");
         }
         catch(SQLException e){
             e.printStackTrace();
         }
     }
 
-   
+  
 }
