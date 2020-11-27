@@ -35,7 +35,7 @@ public class TelaInicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Bem vindo ao jogo de lutinha ");
+        jLabel1.setText("Bem vindo ao simulador de batalha");
 
         jLabel2.setText("O que deseja fazer?");
 

@@ -5,17 +5,25 @@
  */
 package com.mycompany.mavenproject1.Programs;
 
+import com.mycompany.mavenproject1.Models.Ganso;
+import com.mycompany.mavenproject1.Models.Guerreiro;
+import com.mycompany.mavenproject1.Models.Heroi;
+import com.mycompany.mavenproject1.Models.Inimigo;
+import com.mycompany.mavenproject1.Models.Mago;
+
 /**
  *
  * @author CLIENTE
  */
 public class TelaEscolha extends javax.swing.JFrame {
-
+    
+    Integer i = 0;
     /**
      * Creates new form TelaEscolha
      */
     public TelaEscolha() {
         initComponents();
+        
     }
 
     /**
@@ -27,22 +35,122 @@ public class TelaEscolha extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btMago = new javax.swing.JButton();
+        btGuerreiro = new javax.swing.JButton();
+        btGanso = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("E AQUI VOCÊ PODE TREINAR PARA TENTAR SALVAR AQUELES QUE AMA");
+
+        jLabel2.setText("O MUNDO CORRE PERIGO");
+
+        jLabel3.setText("TOME MUITO CUIDADO");
+
+        jLabel4.setText("CHOOSE YOUR FIGHTER:");
+
+        btMago.setText("MAGO");
+        btMago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMagoActionPerformed(evt);
+            }
+        });
+
+        btGuerreiro.setText("GUERREIRO");
+        btGuerreiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGuerreiroActionPerformed(evt);
+            }
+        });
+
+        btGanso.setText("GANSO");
+        btGanso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGansoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(181, 181, 181)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btGanso)
+                        .addGap(100, 100, 100)
+                        .addComponent(btMago)))
+                .addGap(59, 59, 59))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(80, 80, 80)
+                    .addComponent(btGuerreiro)
+                    .addContainerGap(359, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btMago)
+                    .addComponent(btGanso))
+                .addGap(92, 92, 92))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(179, Short.MAX_VALUE)
+                    .addComponent(btGuerreiro)
+                    .addGap(89, 89, 89)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuerreiroActionPerformed
+        Guerreiro guerreiro = new Guerreiro("LINK", 100, 100, 0, "link.png");
+        i = 1;
+        escolherPersonagem(guerreiro,i);
+    }//GEN-LAST:event_btGuerreiroActionPerformed
+
+    private void btGansoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGansoActionPerformed
+        Ganso ganso = new Ganso("GANSO", 1000, 1000, 10000, "ganso.png");
+        i = 2;
+        escolherPersonagem(ganso,i);
+    }//GEN-LAST:event_btGansoActionPerformed
+
+    private void btMagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMagoActionPerformed
+        Mago mago = new Mago("GANDALF", 100, 100, 0, "bulba.png");
+        i = 3;
+        escolherPersonagem(mago,i);
+    }//GEN-LAST:event_btMagoActionPerformed
+
+    void escolherPersonagem(Heroi personagem, Integer designador){
+        Inimigo inimigo = new Inimigo("THE FORBIDDEN ONE", 100, 100, 0, "github.png");
+        TelaBatalha telaBatalha = new TelaBatalha(personagem, i, inimigo);
+        telaBatalha.setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */
@@ -79,5 +187,12 @@ public class TelaEscolha extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btGanso;
+    private javax.swing.JButton btGuerreiro;
+    private javax.swing.JButton btMago;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

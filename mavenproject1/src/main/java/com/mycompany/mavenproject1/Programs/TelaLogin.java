@@ -81,7 +81,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Faça Login para entrar no joguinho de lutinha ");
+        jLabel1.setText("Faça Login para entrar no simulador de batalha");
 
         jLabel2.setText("Nickname:");
 
