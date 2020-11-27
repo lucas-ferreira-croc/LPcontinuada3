@@ -27,10 +27,10 @@ public class TelaLogin extends javax.swing.JFrame {
     
     
     
-    public static void SelectUsuario(String nick, String senha, JLabel labelResultado, TelaEscolha telaJovem){
+    public static void SelectUsuario(String nick, String senha, JLabel labelResultado){
         try {
             Connection con = Conexao.conectarBanco();
-            
+           
             String query = "select * from usuario where nick=? and senha=?";
             
             PreparedStatement stmt = con.prepareStatement(query);
@@ -42,13 +42,14 @@ public class TelaLogin extends javax.swing.JFrame {
             
             if(rs.next()){
                 labelResultado.setText("Bem vindo! " + nick + ". Login realizado com sucesso.");
-                telaJovem.setVisible(true);
+                TelaEscolha telaEscolha=  new TelaEscolha();
+                telaEscolha.setVisible(true);
             }
             else{
                 labelResultado.setText("Você não está cadastrado ou errou algum campo");
-                telaJovem = null;
-                telaJovem.setVisible(true);
             }
+            stmt.close();
+            con.close();
         } 
         catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +81,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Faça Login para entrar no simulador de jovem");
+        jLabel1.setText("Faça Login para entrar no joguinho de lutinha ");
 
         jLabel2.setText("Nickname:");
 
@@ -93,6 +94,11 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         btLogar.setText("Logar");
+        btLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLogarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,6 +153,12 @@ public class TelaLogin extends javax.swing.JFrame {
     private void tfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfSenhaActionPerformed
+
+    private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
+        String nick = tfNick.getText();
+        String senha = tfSenha.getText();
+        SelectUsuario(nick, senha, lbResultado);
+    }//GEN-LAST:event_btLogarActionPerformed
 
     /**
      * @param args the command line arguments
