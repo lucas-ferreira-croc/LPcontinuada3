@@ -9,6 +9,7 @@ public class TesteSelect {
 
     public static void SelectUsuario(String nick, String senha) {
         try {
+            
             Connection con = Conexao.conectarBanco();
 
             String query = "select * from usuario where nome =? and senha=?";

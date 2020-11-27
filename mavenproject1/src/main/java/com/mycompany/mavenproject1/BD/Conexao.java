@@ -13,11 +13,14 @@ public class Conexao {
 
     public static Connection conectarBanco() throws SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/Continuada3?useTimezone=true&serverTimezone=UTC", "root", "53677821");
-        } catch (ClassNotFoundException e) {
-            throw new SQLException(e.getException());
+            
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+             
+            return DriverManager.getConnection("jdbc:mysql://localhost/Continuada3?useTimezone=true&serverTimezone=UTC", 
+                    "root", "53677821");
+        } catch (Exception e) {
+            throw new SQLException(e.getMessage());
+        
         }
     }
 

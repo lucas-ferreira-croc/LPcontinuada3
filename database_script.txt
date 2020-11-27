@@ -1,1 +1,10 @@
 Script de criação do banco. Deve ser executado como root
+
+create database Continuada3;
+use Continuada3;
+
+create table usuario(
+	id int primary key auto_increment,
+	nick varchar(20),
+	senha varchar(20)
+);
