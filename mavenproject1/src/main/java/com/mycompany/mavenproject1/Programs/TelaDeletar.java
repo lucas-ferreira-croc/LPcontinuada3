@@ -5,7 +5,7 @@
  */
 package com.mycompany.mavenproject1.Programs;
 
-import com.mycompany.mavenproject1.TesteDelete;
+import com.mycompany.mavenproject1.BD.TesteDelete;
 
 /**
  *

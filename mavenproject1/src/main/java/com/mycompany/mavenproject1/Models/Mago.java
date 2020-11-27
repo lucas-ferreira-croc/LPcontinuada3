@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
  * @author CLIENTE
  */
 public class Mago extends Heroi {
-    
+
     public Mago(String nome, Integer vida, Integer stamina, Integer especial, String nomeImg) {
         super(nome, vida, stamina, especial, nomeImg);
     }
-    
+
     public void atacarFisico(Heroi inimigo, Mago personagem, Integer vidaInimigo, Integer stamina, Integer especial) {
         if (vidaInimigo > 0) {
             if (stamina >= 80) {
@@ -35,18 +35,18 @@ public class Mago extends Heroi {
                 stamina = 0;
                 JOptionPane.showMessageDialog(null, "Não consigo nem alcançar ele . . .");
             }
-            
+
         } else {
             vidaInimigo = 0;
         }
-        
+
         especial++;
-        
+
         inimigo.setVida(vidaInimigo);
         personagem.setStamina(stamina);
         personagem.setEspecial(especial);
     }
-    
+
     public void atacarMagico(Heroi inimigo, Mago personagem, Integer vidaInimigo, Integer stamina, Integer especial) {
         if (vidaInimigo > 0) {
             if (stamina >= 80) {
@@ -65,18 +65,18 @@ public class Mago extends Heroi {
                 stamina = 0;
                 JOptionPane.showMessageDialog(null, "estou sem mana . . .");
             }
-            
+
         } else {
             vidaInimigo = 0;
         }
-        
+
         especial++;
-        
+
         inimigo.setVida(vidaInimigo);
         personagem.setStamina(stamina);
         personagem.setEspecial(especial);
     }
-    
+
     public void lancarEspecial(Heroi inimigo, Mago aliado, Integer vidaInimigo, Integer especial) {
         if (especial == 5) {
             vidaInimigo -= 60;
@@ -86,44 +86,19 @@ public class Mago extends Heroi {
             JOptionPane.showMessageDialog(null, "não estou preparado ainda . . .");
             especial -= 1;
         }
-        
+
         inimigo.setVida(vidaInimigo);
         aliado.setEspecial(especial);
     }
-    
+
     public void descansar(Mago personagem, Integer vidaPersonagem, Integer stamina) {
-        if (vidaPersonagem >= 90) {
-            vidaPersonagem = 100;
-        } else if (vidaPersonagem >= 40) {
-            vidaPersonagem += 10;
-            stamina += 10;
-            
-        } else if (vidaPersonagem >= 20) {
-            vidaPersonagem += 5;
-            stamina += 5;
-        } else if (vidaPersonagem > 0) {
-            vidaPersonagem += 2;
-            stamina += 2;
-        }
-        
+
+        vidaPersonagem += 15;
+        stamina += 20;
+
         JOptionPane.showMessageDialog(null, "Magos nunca descansam(pelo menos não completamente)");
         personagem.setVida(vidaPersonagem);
-        personagem.setVida(stamina);
+        personagem.setStamina(stamina);
     }
-    
-    public static void main(String[] args) {
-        //String nome, Integer vida, Integer stamina, Integer especial, String nomeImg
-        Mago maguinho = new Mago("Alkandor", 10, 90, 5, "cu");
-        Mago inimiMAGO = new Mago("oi", 100, 44, 2, "oioi");
 
-        //Heroi inimigo, Mago personagem, Integer vidaInimigo, Integer stamina, Integer especial
-        //maguinho.atacarFisico(inimiMAGO, maguinho, inimiMAGO.getVida(), maguinho.getStamina(), maguinho.getEspecial());
-        //Heroi inimigo, Mago personagem,Integer vidaInimigo, Integer stamina, Integer especial
-        //maguinho.atacarMagico(inimiMAGO, maguinho, inimiMAGO.getVida(), maguinho.getStamina(), maguinho.getEspecial());
-        //Heroi inimigo, Guerreiro aliado, Integer vidaInimigo, Integer especial
-        //maguinho.lancarEspecial(inimiMAGO, maguinho, inimiMAGO.getVida(), maguinho.getEspecial());
-        maguinho.descansar(maguinho, maguinho.getVida());
-        
-        System.out.println(maguinho.getVida());
-    }
 }

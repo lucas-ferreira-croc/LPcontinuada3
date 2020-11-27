@@ -1,6 +1,6 @@
 package com.mycompany.mavenproject1.Programs;
 
-import com.mycompany.mavenproject1.TesteInsert;
+import com.mycompany.mavenproject1.BD.TesteInsert;
 
 public class TelaCadastro extends javax.swing.JFrame {
 

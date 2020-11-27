@@ -52,14 +52,11 @@ public abstract class Heroi {
         return nomeImg;
     }
 
-    public void setNomeImg(String nomeImg) {
-        this.nomeImg = nomeImg;
-    }
-    
-    
-    
-    public abstract void atacarFisico();
-    public abstract void atacarMagico();
-    public abstract void lancarEspecial();
-    public abstract void descansar();
+    public  void atacarFisico(){};
+
+    public  void atacarMagico(){};
+
+    public  void lancarEspecial(){};
+
+    public  void descansar(){};
 }

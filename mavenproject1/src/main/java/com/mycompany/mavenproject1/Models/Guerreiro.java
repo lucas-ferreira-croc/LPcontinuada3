@@ -17,7 +17,7 @@ public class Guerreiro extends Heroi {
         super(nome, vida, stamina, especial, nomeImg);
     }
     
-    @Override
+    
     public void atacarFisico(Heroi inimigo, Integer vidaInimigo, Guerreiro personagem, Integer stamina, Integer especial) {
         if (vidaInimigo > 0) {
             if (stamina >= 80) {
@@ -48,7 +48,7 @@ public class Guerreiro extends Heroi {
         personagem.setEspecial(especial);
     }
     
-    @Override
+    
     public void atacarMagico(Guerreiro guerreiro, Integer stamina) {
         JOptionPane.showMessageDialog(null, "TA LOCO DE SOLTAR PODERZIN MAGICO? \n VOCÊ É UM GUERREIRO");
         stamina -= 30;
@@ -56,7 +56,7 @@ public class Guerreiro extends Heroi {
         guerreiro.setStamina(stamina);
     }
     
-    @Override
+    
     public void lancarEspecial(Heroi inimigo, Guerreiro aliado, Integer vidaInimigo, Integer especial) {
         if (especial == 5) {
             vidaInimigo -= 40;
@@ -71,43 +71,19 @@ public class Guerreiro extends Heroi {
         aliado.setEspecial(especial);
     }
     
-    @Override
-    public void descansar(Guerreiro personagem, Integer vidaPersonagem, Integer stamina) {
-        if (vidaPersonagem >= 85) {
-            vidaPersonagem = 100;
-        } else if (vidaPersonagem >= 50) {
-            vidaPersonagem += 15;
-            stamina += 15;
-        } else if (vidaPersonagem >= 20) {
-            vidaPersonagem += 10;
-            stamina += 15;
-            
-        } else if (vidaPersonagem > 0) {
-            vidaPersonagem += 5;
-            stamina += 15;
-            
+   
+    public void descansar(Guerreiro guerreiro, Integer vidaPersonagem, Integer stamina) {
+            vidaPersonagem += 25;
+            stamina += 20;
+        
+            guerreiro.setStamina(stamina);
+            guerreiro.setVida(vidaPersonagem);
+                    
+            JOptionPane.showMessageDialog(null, "Descansar é uma parte crucial de ser um guerreiro");
+
         }
         
-        JOptionPane.showMessageDialog(null, "Descansar é uma parte crucial de ser um guerreiro");
-        personagem.setVida(vidaPersonagem);
-        personagem.setStamina(stamina);
     }
-    
-    public static void main(String[] args) {
-        Guerreiro g = new Guerreiro("c", 30, 10, 5, "q");
-        //super(nome, vida, stamina, especial, nomeImg);
-        Guerreiro inimigo = new Guerreiro("D", 100, 100, 0, "c");
+   
+ 
 
-        //public void atacarFisico(Guerreiro inimigo,  Integer vidaInimigo, Guerreiro personagem , Integer stamina, Integer especial)
-        //g.atacarFisico(inimigo, inimigo.getVida(), g, g.getStamina(), g.getEspecial());
-        //Heroi inimigo, Guerreiro aliado, Integer vidaInimigo, Integer especial
-        //g.lancarEspecial(inimigo, g, inimigo.getVida(), g.getEspecial());
-        //g.descansar(g, g.getVida());
-        
-        System.out.println(g.getVida().toString());
-
-        //System.out.println(g.getStamina().toString());
-        //System.out.println(g.getEspecial().toString());
-        //g.atacarMagico();
-    }
-}

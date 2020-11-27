@@ -55,12 +55,10 @@ public class TelaBatalha extends javax.swing.JFrame {
         lbVilao.setIcon(gitImage);
 
         pbGitVida.setMaximum(inimigo.getVida());
-        //pbGitStamina.setMaximum(inimigo.getStamina());
-
+        
         pbHeroiVida.setMaximum(personagem.getVida());
         pbHeroiStamina.setMaximum(personagem.getStamina());
 
-        //pbGitStamina.setValue(inimigo.getStamina());
         pbGitVida.setValue(inimigo.getVida());
 
         pbHeroiVida.setValue(personagem.getVida());
@@ -82,7 +80,7 @@ public class TelaBatalha extends javax.swing.JFrame {
             inimigo.descansar(inimigo, vidaInimigo);
         }
 
-        if (inimigo.getEspecial() == 5) {
+        if (inimigo.getEspecial() == 7) {
             qualEspecial(qualAtaque, inimigo, guerreiro, mago, ganso, vidaGuerreiro, vidaMago, vidaGanso, especial);
         }
 
@@ -130,17 +128,24 @@ public class TelaBatalha extends javax.swing.JFrame {
 
     void atualizarTela(JProgressBar pbVidaPersonagem, JProgressBar pbStaminaPersonagem, JProgressBar pbInimigoBar,
             JLabel lbEspecial, Integer vidaPersonagem, Integer vidaInimigo, Integer especialPersonagem,
-            Integer staminaPersonagem) {
+            Integer staminaPersonagem, Inimigo inimigo, Guerreiro guerreiro, Mago mago) {
 
         pbVidaPersonagem.setValue(vidaPersonagem);
         pbStaminaPersonagem.setValue(staminaPersonagem);
 
         pbInimigoBar.setValue(vidaInimigo);
         lbEspecial.setText(especialPersonagem.toString());
+
+    }
+
+    void atualizarTela(JProgressBar pbVidaChar, JProgressBar pbStaminaChar, Integer vida, Integer stamina) {
+
+        pbVidaChar.setValue(vida);
+        pbStaminaChar.setValue(stamina);
     }
 
     void gitMorreu(Inimigo inimigo) {
-        if (inimigo.getVida() == 0) {
+        if (inimigo.getVida() <= 0) {
             JOptionPane.showMessageDialog(null, "O GATOPOLVO . . . \nSUCUMBIU");
 
             btAtacar.setEnabled(false);
@@ -151,8 +156,8 @@ public class TelaBatalha extends javax.swing.JFrame {
     }
 
     void voceMorreu(Guerreiro guerreiro, Mago mago) {
-        if (guerreiro.getVida() == 0 || mago.getVida() == 0) {
-            JOptionPane.showMessageDialog(null, "VOCÊ . . . \nPERECEU");
+        if (guerreiro.getVida() <= 0 || mago.getVida() <= 0) {
+            JOptionPane.showMessageDialog(null, "VOCÊ . . . \nSUCUMBIU");
 
             btAtacar.setEnabled(false);
             btDescansar.setEnabled(false);
@@ -202,6 +207,11 @@ public class TelaBatalha extends javax.swing.JFrame {
         });
 
         btDescansar.setText("Descansar");
+        btDescansar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDescansarActionPerformed(evt);
+            }
+        });
 
         btMagia.setText("Magia");
         btMagia.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +221,11 @@ public class TelaBatalha extends javax.swing.JFrame {
         });
 
         btEspecial.setText("Especial");
+        btEspecial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEspecialActionPerformed(evt);
+            }
+        });
 
         pbHeroiVida.setBackground(new java.awt.Color(255, 102, 102));
 
@@ -300,60 +315,125 @@ public class TelaBatalha extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAtacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtacarActionPerformed
-        if (inimg.getVida() != 0) {
-            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(), guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+        if (inimg.getVida() > 0) {
+            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(),
+                    guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+
+            if (desig == 1) {
+
+                guerr.atacarFisico(inimg, inimg.getVida(), guerr, guerr.getStamina(), guerr.getEspecial());
+
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(),
+                        inimg.getVida(), guerr.getEspecial(), guerr.getStamina(), inimg, guerr, mag);
+            } else if (desig == 2) {
+
+                gans.atacarMagico(inimg);
+
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(),
+                        inimg.getVida(), mag.getEspecial(), mag.getStamina(), inimg, guerr, mag);
+
+            } else {
+
+                mag.atacarFisico(inimg, mag, inimg.getVida(), mag.getStamina(), mag.getEspecial());
+
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(),
+                        inimg.getVida(), mag.getEspecial(), mag.getStamina(), inimg, guerr, mag);
+            }
         }
 
-        if (desig == 1) {
-            guerr.atacarFisico(inimg, inimg.getVida(), guerr, guerr.getStamina(), guerr.getEspecial());
-            System.out.println(guerr.getStamina().toString());
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(), inimg.getVida(), guerr.getEspecial(), guerr.getStamina());
-
-        } else if (desig == 2) {
-            gans.atacarFisico(inimg);
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
-
-        } else {
-            mag.atacarFisico(inimg, mag, inimg.getVida(), inimg.getStamina(), inimg.getEspecial());
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
-
-        }
-
-        guerr.setVida(0);
-        mag.setVida(0);
-        
         gitMorreu(inimg);
         voceMorreu(guerr, mag);
-        
+
     }//GEN-LAST:event_btAtacarActionPerformed
 
     private void btMagiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMagiaActionPerformed
-        if (inimg.getVida() != 0) {
-            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(), guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
-        }
+        if (inimg.getVida() > 0) {
+            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(),
+                    guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
 
-        if (desig == 1) {
+            if (desig == 1) {
 
-            guerr.atacarMagico(guerr, guerr.getStamina());
+                guerr.atacarMagico(guerr, guerr.getStamina());
 
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(), inimg.getVida(), guerr.getEspecial(), guerr.getStamina());
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(),
+                        inimg.getVida(), guerr.getEspecial(), guerr.getStamina(), inimg, guerr, mag);
 
-        } else if (desig == 2) {
+            } else if (desig == 2) {
 
-            gans.atacarMagico(inimg);
+                gans.atacarMagico(inimg);
 
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(),
+                        inimg.getVida(), mag.getEspecial(), mag.getStamina(), inimg, guerr, mag);
 
-        } else {
+            } else {
 
-            mag.atacarMagico(inimg, mag, inimg.getVida(), mag.getStamina(), mag.getEspecial());
+                mag.atacarMagico(inimg, mag, inimg.getVida(), mag.getStamina(), mag.getEspecial());
 
-            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+                atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(),
+                        inimg.getVida(), mag.getEspecial(), mag.getStamina(), inimg, guerr, mag);
+            }
         }
 
         gitMorreu(inimg);
         voceMorreu(guerr, mag);
+
     }//GEN-LAST:event_btMagiaActionPerformed
+
+    private void btDescansarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescansarActionPerformed
+        tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(),
+                guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+
+        if (desig == 1) {
+
+            guerr.descansar(guerr, guerr.getVida(), guerr.getStamina());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, guerr.getVida(), guerr.getStamina());
+
+        } else if (desig == 2) {
+            gans.descansar(inimg);
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(),
+                    inimg.getVida(), mag.getEspecial(), mag.getStamina(), inimg, guerr, mag);
+
+        } else {
+
+            mag.descansar(mag, mag.getVida(), mag.getStamina());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, mag.getVida(), mag.getStamina());
+
+        }
+
+        gitMorreu(inimg);
+        voceMorreu(guerr, mag);
+    }//GEN-LAST:event_btDescansarActionPerformed
+
+    private void btEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEspecialActionPerformed
+
+        tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(),
+                guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+
+        if (desig == 1) {
+            guerr.lancarEspecial(inimg, guerr, inimg.getVida(), guerr.getEspecial());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(),
+                    inimg.getVida(), guerr.getEspecial(), guerr.getStamina(), inimg, guerr, mag);
+
+        } else if (desig == 2) {
+            gans.lancarEspecial(inimg);
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(),
+                    inimg.getVida(), guerr.getEspecial(), guerr.getStamina(), inimg, guerr, mag);
+
+        } else {
+            mag.lancarEspecial(inimg, mag, inimg.getVida(), mag.getEspecial());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(),
+                    inimg.getVida(), guerr.getEspecial(), guerr.getStamina(), inimg, guerr, mag);
+        }
+
+        gitMorreu(inimg);
+        voceMorreu(guerr, mag);
+    }//GEN-LAST:event_btEspecialActionPerformed
 
     /**
      * @param args the command line arguments

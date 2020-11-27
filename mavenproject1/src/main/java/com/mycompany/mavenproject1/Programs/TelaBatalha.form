@@ -137,6 +137,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Descansar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDescansarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btMagia">
       <Properties>
@@ -150,6 +153,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Especial"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEspecialActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JProgressBar" name="pbHeroiVida">
       <Properties>

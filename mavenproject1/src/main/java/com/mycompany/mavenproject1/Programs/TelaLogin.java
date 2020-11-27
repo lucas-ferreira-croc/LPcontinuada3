@@ -5,7 +5,7 @@
  */
 package com.mycompany.mavenproject1.Programs;
 
-import com.mycompany.mavenproject1.Conexao;
+import com.mycompany.mavenproject1.BD.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
