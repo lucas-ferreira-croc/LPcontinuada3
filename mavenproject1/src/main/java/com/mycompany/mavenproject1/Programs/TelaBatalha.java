@@ -10,7 +10,11 @@ import com.mycompany.mavenproject1.Models.Guerreiro;
 import com.mycompany.mavenproject1.Models.Heroi;
 import com.mycompany.mavenproject1.Models.Inimigo;
 import com.mycompany.mavenproject1.Models.Mago;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -21,52 +25,140 @@ public class TelaBatalha extends javax.swing.JFrame {
     /**
      * Creates new form TelaBatalha
      */
-   
-    
     protected Guerreiro guerr;
     protected Ganso gans;
     protected Mago mag;
     protected Inimigo inimg;
-    
-    public TelaBatalha(Heroi personagem , Integer designador, Heroi inimigo) {
+    protected Integer desig;
+
+    public TelaBatalha(Heroi personagem, Integer designador, Heroi inimigo) {
         initComponents();
-        
-        if(designador == 1){
-            System.out.println("Guerreiro");
-        }
-        else if(designador == 2){
-            System.out.println("GANSO");
-        }
-        else if(designador == 3){
-            System.out.println("Mago");
-        }
-        
+
+        guerr = new Guerreiro(personagem.getNome(), personagem.getVida(), personagem.getStamina(), personagem.getEspecial(), personagem.getNomeImg());
+
+        gans = new Ganso(personagem.getNome(), personagem.getVida(), personagem.getStamina(), personagem.getEspecial(), personagem.getNomeImg());
+
+        mag = new Mago(personagem.getNome(), personagem.getVida(), personagem.getStamina(), personagem.getEspecial(), personagem.getNomeImg());
+
+        inimg = new Inimigo(inimigo.getNome(), inimigo.getVida(), inimigo.getStamina(), inimigo.getEspecial(), inimigo.getNomeImg());
+
         ImageIcon heroImage = new ImageIcon(personagem.getNomeImg());
-        ImageIcon gitImage =  new ImageIcon(inimigo.getNomeImg());
-        
+        ImageIcon gitImage = new ImageIcon(inimigo.getNomeImg());
+
         lbHeroi.setText("");
         lbHeroi.setIcon(heroImage);
-        
+
         lbNome.setText(personagem.getNome());
         lbVilaoNome.setText(inimigo.getNome());
-        
+
         lbVilao.setText("");
         lbVilao.setIcon(gitImage);
-        
+
         pbGitVida.setMaximum(inimigo.getVida());
-        pbGitStamina.setMaximum(inimigo.getStamina());
-        
+        //pbGitStamina.setMaximum(inimigo.getStamina());
+
         pbHeroiVida.setMaximum(personagem.getVida());
         pbHeroiStamina.setMaximum(personagem.getStamina());
-        
-        pbGitStamina.setValue(inimigo.getStamina());
+
+        //pbGitStamina.setValue(inimigo.getStamina());
         pbGitVida.setValue(inimigo.getVida());
-        
+
         pbHeroiVida.setValue(personagem.getVida());
         pbHeroiStamina.setValue(personagem.getStamina());
-        
-        
-        Guerreiro guerr = new Guerreiro(personagem.getNome(), personagem.getVida(), personagem.getStamina(), personagem.getEspecial(), personagem.getNomeImg());
+
+        desig = designador;
+    }
+
+    void tomarDecisao(Integer qualAtaque, Inimigo inimigo, Guerreiro guerreiro, Ganso ganso, Mago mago,
+            Integer stamina, Integer especial, Integer vidaGuerreiro, Integer vidaGanso, Integer vidaMago, Integer vidaInimigo) {
+        if (inimigo.getVida() >= 30) {
+            Integer decisao = ThreadLocalRandom.current().nextInt(0, 2);
+            if (decisao == 0) {
+                qualAtaqueFisico(qualAtaque, guerreiro, mago, ganso, inimigo, stamina, especial, vidaGuerreiro, vidaGanso, vidaMago);
+            } else {
+                qualAtaqueMagico(qualAtaque, guerreiro, mago, ganso, inimigo, stamina, especial, vidaGuerreiro, vidaGanso, vidaMago);
+            }
+        } else if (inimigo.getVida() < 30) {
+            inimigo.descansar(inimigo, vidaInimigo);
+        }
+
+        if (inimigo.getEspecial() == 5) {
+            qualEspecial(qualAtaque, inimigo, guerreiro, mago, ganso, vidaGuerreiro, vidaMago, vidaGanso, especial);
+        }
+
+    }
+
+    void qualEspecial(Integer quem, Inimigo inimigo, Guerreiro guerreiro, Mago mago, Ganso ganso,
+            Integer vidaGuerr, Integer vidaMago, Integer vidaGanso, Integer especial) {
+
+        if (quem == 1) {
+            inimigo.lancarEspecial(guerreiro, inimigo, vidaGuerr, especial);
+        } else if (quem == 2) {
+            inimigo.lancarEspecial(ganso, inimigo, vidaGanso, especial);
+
+        } else if (quem == 3) {
+            inimigo.lancarEspecial(mago, inimigo, vidaMago, especial);
+        }
+    }
+
+    void qualAtaqueFisico(Integer quem, Guerreiro guerreiro, Mago mago, Ganso ganso,
+            Inimigo inimigo, Integer stamina, Integer especial, Integer vidaGuerreiro,
+            Integer vidaGanso, Integer vidaMago) {
+
+        if (quem == 1) {
+            inimigo.atacarFisico(guerreiro, inimigo, vidaGuerreiro, stamina, especial);
+        } else if (quem == 2) {
+            inimigo.atacarFisico(ganso, inimigo, vidaGanso, stamina, especial);
+
+        } else if (quem == 3) {
+            inimigo.atacarFisico(mago, inimigo, vidaMago, stamina, especial);
+        }
+    }
+
+    void qualAtaqueMagico(Integer quem, Guerreiro guerreiro, Mago mago, Ganso ganso,
+            Inimigo inimigo, Integer stamina, Integer especial, Integer vidaGuerreiro,
+            Integer vidaGanso, Integer vidaMago) {
+        if (quem == 1) {
+            inimigo.atacarMagico(guerreiro, inimigo, vidaGuerreiro, stamina, especial);
+        } else if (quem == 2) {
+            inimigo.atacarMagico(ganso, inimigo, vidaGanso, stamina, especial);
+
+        } else if (quem == 3) {
+            inimigo.atacarMagico(mago, inimigo, vidaMago, stamina, especial);
+        }
+    }
+
+    void atualizarTela(JProgressBar pbVidaPersonagem, JProgressBar pbStaminaPersonagem, JProgressBar pbInimigoBar,
+            JLabel lbEspecial, Integer vidaPersonagem, Integer vidaInimigo, Integer especialPersonagem,
+            Integer staminaPersonagem) {
+
+        pbVidaPersonagem.setValue(vidaPersonagem);
+        pbStaminaPersonagem.setValue(staminaPersonagem);
+
+        pbInimigoBar.setValue(vidaInimigo);
+        lbEspecial.setText(especialPersonagem.toString());
+    }
+
+    void gitMorreu(Inimigo inimigo) {
+        if (inimigo.getVida() == 0) {
+            JOptionPane.showMessageDialog(null, "O GATOPOLVO . . . \nSUCUMBIU");
+
+            btAtacar.setEnabled(false);
+            btDescansar.setEnabled(false);
+            btEspecial.setEnabled(false);
+            btMagia.setEnabled(false);
+        }
+    }
+
+    void voceMorreu(Guerreiro guerreiro, Mago mago) {
+        if (guerreiro.getVida() == 0 || mago.getVida() == 0) {
+            JOptionPane.showMessageDialog(null, "VOCÊ . . . \nPERECEU");
+
+            btAtacar.setEnabled(false);
+            btDescansar.setEnabled(false);
+            btEspecial.setEnabled(false);
+            btMagia.setEnabled(false);
+        }
     }
 
     /**
@@ -81,10 +173,10 @@ public class TelaBatalha extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         lbHeroi = new javax.swing.JLabel();
         lbVilao = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btAtacar = new javax.swing.JButton();
+        btDescansar = new javax.swing.JButton();
+        btMagia = new javax.swing.JButton();
+        btEspecial = new javax.swing.JButton();
         pbHeroiVida = new javax.swing.JProgressBar();
         pbHeroiStamina = new javax.swing.JProgressBar();
         pbGitVida = new javax.swing.JProgressBar();
@@ -93,7 +185,6 @@ public class TelaBatalha extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lbEspecial = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        pbGitStamina = new javax.swing.JProgressBar();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -103,26 +194,31 @@ public class TelaBatalha extends javax.swing.JFrame {
 
         lbVilao.setText("placeholder");
 
-        jButton2.setText("Atacar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btAtacar.setText("Atacar");
+        btAtacar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btAtacarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Descansar");
+        btDescansar.setText("Descansar");
 
-        jButton4.setText("Magia");
+        btMagia.setText("Magia");
+        btMagia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMagiaActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Especial");
+        btEspecial.setText("Especial");
 
         pbHeroiVida.setBackground(new java.awt.Color(255, 102, 102));
 
         lbNome.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lbNome.setText("jLabel1");
+        lbNome.setText("placeHolder");
 
         lbVilaoNome.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lbVilaoNome.setText("THE FORBBIDEN ONE");
+        lbVilaoNome.setText("placeHolder");
 
         jLabel1.setText("Especial: ");
 
@@ -140,16 +236,16 @@ public class TelaBatalha extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(btDescansar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton5))
+                                .addComponent(btEspecial))
                             .addComponent(pbHeroiVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pbHeroiStamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbHeroi)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(btAtacar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4)
+                                .addComponent(btMagia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -163,8 +259,7 @@ public class TelaBatalha extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbVilaoNome)
                     .addComponent(lbVilao)
-                    .addComponent(pbGitVida, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pbGitStamina, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pbGitVida, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
@@ -172,24 +267,21 @@ public class TelaBatalha extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4)
+                    .addComponent(btAtacar)
+                    .addComponent(btMagia)
                     .addComponent(jLabel1)
                     .addComponent(lbEspecial)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(btDescansar)
+                    .addComponent(btEspecial))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pbHeroiVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pbGitVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pbHeroiStamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pbGitStamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pbHeroiVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pbGitVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pbHeroiStamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -207,9 +299,61 @@ public class TelaBatalha extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //guerr.atacarFisico(persona, ICONIFIED, guerr, SOMEBITS, SOMEBITS);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btAtacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtacarActionPerformed
+        if (inimg.getVida() != 0) {
+            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(), guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+        }
+
+        if (desig == 1) {
+            guerr.atacarFisico(inimg, inimg.getVida(), guerr, guerr.getStamina(), guerr.getEspecial());
+            System.out.println(guerr.getStamina().toString());
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(), inimg.getVida(), guerr.getEspecial(), guerr.getStamina());
+
+        } else if (desig == 2) {
+            gans.atacarFisico(inimg);
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+
+        } else {
+            mag.atacarFisico(inimg, mag, inimg.getVida(), inimg.getStamina(), inimg.getEspecial());
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+
+        }
+
+        guerr.setVida(0);
+        mag.setVida(0);
+        
+        gitMorreu(inimg);
+        voceMorreu(guerr, mag);
+        
+    }//GEN-LAST:event_btAtacarActionPerformed
+
+    private void btMagiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMagiaActionPerformed
+        if (inimg.getVida() != 0) {
+            tomarDecisao(desig, inimg, guerr, gans, mag, inimg.getStamina(), inimg.getEspecial(), guerr.getVida(), gans.getVida(), mag.getVida(), inimg.getVida());
+        }
+
+        if (desig == 1) {
+
+            guerr.atacarMagico(guerr, guerr.getStamina());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, guerr.getVida(), inimg.getVida(), guerr.getEspecial(), guerr.getStamina());
+
+        } else if (desig == 2) {
+
+            gans.atacarMagico(inimg);
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+
+        } else {
+
+            mag.atacarMagico(inimg, mag, inimg.getVida(), mag.getStamina(), mag.getEspecial());
+
+            atualizarTela(pbHeroiVida, pbHeroiStamina, pbGitVida, lbEspecial, mag.getVida(), inimg.getVida(), mag.getEspecial(), mag.getStamina());
+        }
+
+        gitMorreu(inimg);
+        voceMorreu(guerr, mag);
+    }//GEN-LAST:event_btMagiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,16 +385,16 @@ public class TelaBatalha extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btAtacar;
+    private javax.swing.JButton btDescansar;
+    private javax.swing.JButton btEspecial;
+    private javax.swing.JButton btMagia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JToggleButton jToggleButton1;
@@ -259,7 +403,6 @@ public class TelaBatalha extends javax.swing.JFrame {
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbVilao;
     private javax.swing.JLabel lbVilaoNome;
-    private javax.swing.JProgressBar pbGitStamina;
     private javax.swing.JProgressBar pbGitVida;
     private javax.swing.JProgressBar pbHeroiStamina;
     private javax.swing.JProgressBar pbHeroiVida;

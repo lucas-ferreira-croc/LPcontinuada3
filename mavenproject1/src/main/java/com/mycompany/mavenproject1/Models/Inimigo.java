@@ -57,7 +57,7 @@ public class Inimigo extends Heroi {
         personagem.setVida(vidaInimigo);
         inimigo.setEspecial(especial);
 
-        JOptionPane.showMessageDialog(null, "USANDO SEU PODER DE VERSIONAMENTO O GATOPOLVO \n"
+        JOptionPane.showMessageDialog(null, "USANDO SEU PODER DE VERSIONAMENTO , O GATOPOLVO \n"
                 + " FEZ VOCÊ VOLTAR A UMA VERSÃO MAIS FRACA DE SI MESMO");
 
     }
@@ -66,6 +66,8 @@ public class Inimigo extends Heroi {
     public void descansar(Heroi inimigo, Integer vida) {
         vida += 15;
         inimigo.setVida(vida);
+        JOptionPane.showMessageDialog(null, "USANDO SEU PODER DE VERSIONAMENTO, O GATOPOLVO \n"
+                + "VOLTOU A UMA VERSÃO MAIS SAUDÁVEL");
     }
 
     

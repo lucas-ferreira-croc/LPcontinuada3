@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
  * @author CLIENTE
  */
 public class Guerreiro extends Heroi {
-
+    
     public Guerreiro(String nome, Integer vida, Integer stamina, Integer especial, String nomeImg) {
         super(nome, vida, stamina, especial, nomeImg);
     }
-
+    
     @Override
     public void atacarFisico(Heroi inimigo, Integer vidaInimigo, Guerreiro personagem, Integer stamina, Integer especial) {
         if (vidaInimigo > 0) {
@@ -37,24 +37,25 @@ public class Guerreiro extends Heroi {
                 JOptionPane.showMessageDialog(null, "to muito cansado pra dar porrada");
             }
             
-            
         } else {
             vidaInimigo = 0;
         }
-
+        
         especial++;
-
+        
         inimigo.setVida(vidaInimigo);
         personagem.setStamina(stamina);
         personagem.setEspecial(especial);
     }
-
+    
     @Override
-    public void atacarMagico() {
+    public void atacarMagico(Guerreiro guerreiro, Integer stamina) {
         JOptionPane.showMessageDialog(null, "TA LOCO DE SOLTAR PODERZIN MAGICO? \n VOCÊ É UM GUERREIRO");
         stamina -= 30;
+        
+        guerreiro.setStamina(stamina);
     }
-
+    
     @Override
     public void lancarEspecial(Heroi inimigo, Guerreiro aliado, Integer vidaInimigo, Integer especial) {
         if (especial == 5) {
@@ -65,28 +66,33 @@ public class Guerreiro extends Heroi {
             JOptionPane.showMessageDialog(null, "não estou preparado ainda . . .");
             especial -= 1;
         }
-
+        
         inimigo.setVida(vidaInimigo);
         aliado.setEspecial(especial);
     }
-
+    
     @Override
-    public void descansar(Guerreiro personagem, Integer vidaPersonagem) {
-        if(vidaPersonagem >= 85){
+    public void descansar(Guerreiro personagem, Integer vidaPersonagem, Integer stamina) {
+        if (vidaPersonagem >= 85) {
             vidaPersonagem = 100;
-        }
-        else if(vidaPersonagem >= 50){
+        } else if (vidaPersonagem >= 50) {
             vidaPersonagem += 15;
-        }else if(vidaPersonagem >= 20 ){
+            stamina += 15;
+        } else if (vidaPersonagem >= 20) {
             vidaPersonagem += 10;
-        }else if(vidaPersonagem > 0){
+            stamina += 15;
+            
+        } else if (vidaPersonagem > 0) {
             vidaPersonagem += 5;
+            stamina += 15;
+            
         }
-
+        
         JOptionPane.showMessageDialog(null, "Descansar é uma parte crucial de ser um guerreiro");
         personagem.setVida(vidaPersonagem);
+        personagem.setStamina(stamina);
     }
-
+    
     public static void main(String[] args) {
         Guerreiro g = new Guerreiro("c", 30, 10, 5, "q");
         //super(nome, vida, stamina, especial, nomeImg);
@@ -95,17 +101,13 @@ public class Guerreiro extends Heroi {
         //public void atacarFisico(Guerreiro inimigo,  Integer vidaInimigo, Guerreiro personagem , Integer stamina, Integer especial)
         //g.atacarFisico(inimigo, inimigo.getVida(), g, g.getStamina(), g.getEspecial());
         //Heroi inimigo, Guerreiro aliado, Integer vidaInimigo, Integer especial
-        
         //g.lancarEspecial(inimigo, g, inimigo.getVida(), g.getEspecial());
-        
-        g.descansar(g, g.getVida());
+        //g.descansar(g, g.getVida());
         
         System.out.println(g.getVida().toString());
 
         //System.out.println(g.getStamina().toString());
-
         //System.out.println(g.getEspecial().toString());
-
         //g.atacarMagico();
     }
 }

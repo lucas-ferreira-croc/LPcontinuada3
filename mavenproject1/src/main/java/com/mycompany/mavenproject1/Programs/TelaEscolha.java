@@ -135,7 +135,7 @@ public class TelaEscolha extends javax.swing.JFrame {
     }//GEN-LAST:event_btGuerreiroActionPerformed
 
     private void btGansoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGansoActionPerformed
-        Ganso ganso = new Ganso("GANSO", 1000, 1000, 10000, "ganso.png");
+        Ganso ganso = new Ganso("GANSO", 1000, 1000, 999999999, "ganso.png");
         i = 2;
         escolherPersonagem(ganso,i);
     }//GEN-LAST:event_btGansoActionPerformed
