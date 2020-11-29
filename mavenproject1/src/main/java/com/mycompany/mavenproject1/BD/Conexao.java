@@ -17,7 +17,7 @@ public class Conexao {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
              
             return DriverManager.getConnection("jdbc:mysql://localhost/Continuada3?useTimezone=true&serverTimezone=UTC", 
-                    "root", "53677821");
+                    "root", "urubu100");
         } catch (Exception e) {
             throw new SQLException(e.getMessage());
         
